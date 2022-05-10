@@ -1,12 +1,31 @@
 <template>
-<div>
+  <div class="seriesListWrapper">
 
-</div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import {onMounted, ref} from 'vue';
+
+import {getSeriesWithPagination} from '@/api/series';
+
 export default {
-name: "SeriesList"
+  name: "series-list",
+  components: {},
+  setup() {
+    const currentPage = ref(1);
+
+
+    onMounted(() => {
+      getSeries();
+    });
+
+    const getSeries = () => {
+      getSeriesWithPagination(currentPage.value).then(response => {
+        console.log('response', response);
+      });
+    }
+  }
 }
 </script>
 

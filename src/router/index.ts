@@ -1,10 +1,7 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import SeriesList from '../components/SeriesList.vue';
 
-Vue.use(VueRouter)
-
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'series-list',
@@ -12,7 +9,9 @@ const routes: Array<RouteConfig> = [
   }
 ]
 
-const router = new VueRouter({
+
+const router = createRouter({
+  history: createWebHistory(),
   routes
 })
 
