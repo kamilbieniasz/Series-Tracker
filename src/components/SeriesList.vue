@@ -1,5 +1,5 @@
 <template>
-  <div class="seriesListWrapper">
+  <div id="seriesListWrapper">
     <div v-for="seriesItem in series" :key="seriesItem.id">
       <SeriesItem :seriesItem="seriesItem"></SeriesItem>
     </div>
@@ -39,6 +39,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+div#seriesListWrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+}
 </style>
