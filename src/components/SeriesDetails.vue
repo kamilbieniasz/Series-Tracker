@@ -123,6 +123,7 @@ export default {
         margin: 0 10px;
         text-decoration: none;
         color: $color-black;
+        font-size: $font-size-normal;
         transition: transform 300ms ease-in-out;
 
         &:hover {
@@ -135,8 +136,8 @@ export default {
         }
 
         & > svg {
-          width: 25px;
-          height: 25px;
+          width: 15px;
+          height: 15px;
         }
       }
 
