@@ -84,7 +84,7 @@ export default {
   components: {},
   setup() {
     const route = useRoute();
-    const seriesDetails = ref<AxiosResponse<Series>>();
+    const seriesDetails = ref<Series>();
 
     onMounted(() => {
       getSeriesDetailsInfo();
