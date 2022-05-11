@@ -46,7 +46,6 @@ export default {
 
     const pagination = (event: Pagination | null = null) => {
       if(event) {
-        console.log('event ', event)
         currentPage.value = event.page;
       }
       paginatedSeries.value = series.value;
@@ -54,12 +53,7 @@ export default {
       const from =  itemsPerPage.value * currentPage.value;
       const to =  (1 + currentPage.value) * itemsPerPage.value;
 
-      console.log('from ', from);
-      console.log('to ', to)
-
       paginatedSeries.value = paginatedSeries.value?.slice(from, to)
-
-      console.log(paginatedSeries.value)
     }
 
     return {series, itemsPerPage, paginatedSeries, pagination}
