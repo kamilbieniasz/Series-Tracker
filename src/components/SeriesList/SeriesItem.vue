@@ -1,36 +1,31 @@
 <template>
-  <div class="seriesItem">
+  <div class="seriesItem" v-if="seriesItem.name">
     <img :src="seriesItem.image.medium" :alt="seriesItem.name" />
+    <h2 class="title">
+      {{seriesItem.name}}
+    </h2>
     <div class="shortDescription">
-      <h2>
-        {{seriesItem.name}}
-      </h2>
-      <div class="info">
-        <div>
-          <span>{{seriesItem.rating.average ? seriesItem.rating.average : 'Brak'}}</span>
-          <span>Ocena</span>
-        </div>
-        <div>
-          <span>{{seriesItem.type}}</span>
-          <span>Rodzaj</span>
-        </div>
-        <div>
-          <span>{{seriesItem.network.name}}</span>
-          <span>Kanał</span>
-        </div>
-        <div>
-          <span>{{seriesItem.premiered}}</span>
-          <span>Premiera</span>
-        </div>
-        <div>
-          <span>{{seriesItem.status}}</span>
-          <span>Status</span>
-        </div>
-        <div>
-          <span><font-awesome-icon icon="ellipsis" /></span>
-          <span>Więcej</span>
-        </div>
+      <div class="title">
+        <strong>Title: </strong>
+        <span>{{seriesItem.name}}</span>
       </div>
+
+      <div class="rating" v-if="seriesItem.rating.average">
+        <strong>Rating: </strong>
+        <span>{{seriesItem.rating.average}}</span>
+      </div>
+
+      <div class="rating" v-if="seriesItem.type">
+        <strong>Type: </strong>
+        <span>{{seriesItem.type}}</span>
+      </div>
+
+      <Button class="moreInfoBtn p-button">More</Button>
+
+      <button class="favoriteBtn" @click="addToFavorite">
+        <font-awesome-icon icon="star" type="far" class="starRegular" v-if="!favoriteStatus"></font-awesome-icon>
+        <font-awesome-icon icon="star" type="fas" class="starSolid" v-if="favoriteStatus"></font-awesome-icon>
+      </buttoN>
     </div>
   </div>
 </template>
@@ -38,13 +33,30 @@
 <script lang="ts">
 import {Series} from "@/interfaces/Series";
 import FontAwesomeIcon from "@/libs/FontAwesomeIcon.vue";
+import Button from "primevue/button";
+import {ref} from "vue";
 
 export default {
   name: "SeriesItem",
-  components: {FontAwesomeIcon},
+  components: {
+    FontAwesomeIcon,
+    Button
+  },
   props: {
     seriesItem: Object as () => Series
   },
+  setup() {
+    const favoriteStatus = ref(false);
+
+    const addToFavorite = () => {
+      favoriteStatus.value = !favoriteStatus.value
+    }
+
+    return {
+      favoriteStatus,
+      addToFavorite
+    }
+  }
 }
 </script>
 
@@ -52,51 +64,100 @@ export default {
   div.seriesItem {
     height: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: 300ms ease-in-out;
+    position: relative;
+    z-index: 50;
+
+    &:hover {
+      -webkit-box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+      -moz-box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+      box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
+
+      transform: scale(1.1);
+      transition: 300ms ease-in-out;
+
+      & > h2.title {
+        transform: translateY(100%);
+        transition: transform 300ms ease-in-out;
+      }
+
+      & > div.shortDescription {
+        width: 100%;
+        transition: 300ms ease-in-out;
+
+        & > div.title {
+          display: block;
+        }
+
+        & > button.moreInfoBtn {
+          opacity: 1;
+          transition: opacity 200ms 200ms ease-in-out;
+        }
+      }
+    }
 
     & > img {
-      width: 100%;
+      width: 40%;
       object-fit: contain;
     }
 
-    & > div.shortDescription {
+    & > h2.title {
       width: 100%;
+      min-height: 30%;
       bottom: 0;
+      position: absolute;
       background-color: $color-white;
       opacity: 0.8;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      font-size: $font-size-series-title;
+      font-weight: bold;
+      text-align: center;
+      margin: 0;
+      transition: transform 300ms ease-in-out;
+    }
 
-      & > h2 {
-        font-size: $font-size-series-title;
-        font-weight: bold;
-        text-align: center;
+    & > div.shortDescription {
+      width: 60%;
+      background-color: $color-smoke;
+      padding: 15px 35px 15px 15px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+
+      & > div {
         margin: 5px 0;
       }
 
-      & > div.info {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        height: 100%;
-
-        & > div {
-          width: 100%;
-          //height: 100%;
-          border: 2px solid $color-black;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          & > span {
-            margin: 5px 0;
-
-            & svg {
-              height: 30px;
-            }
-          }
-        }
+      & > div.title{
+        display: none;
       }
 
+      & > button.moreInfoBtn {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        opacity: 0;
+      }
+
+      & > button.favoriteBtn {
+        top: 5px;
+        right: 5px;
+        position: absolute;
+        background-color: transparent;
+        border:none;
+
+        & svg {
+          width: 25px;
+          height: 25px;
+          color: $color-gold;
+          -webkit-filter: drop-shadow( 0px 0px 2px rgba(0, 0, 0, .7));
+          filter: drop-shadow( 0px 0px 2px rgba(0, 0, 0, .7));
+        }
+      }
     }
   }
 </style>

@@ -1,7 +1,9 @@
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core';
 import FontAwesomeIcon from '../libs/FontAwesomeIcon.vue';
-import {faEllipsis} from "@fortawesome/free-solid-svg-icons";
+import {faStar as faStarRegular} from "@fortawesome/free-regular-svg-icons";
+import {faStar as faStarSolid} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faEllipsis)
+library.add(faStarRegular);
+library.add(faStarSolid);
 
 export { FontAwesomeIcon }
