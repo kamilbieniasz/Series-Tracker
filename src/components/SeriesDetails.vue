@@ -76,7 +76,6 @@
 import {getSeriesDetails} from '@/api/series';
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
-import {AxiosResponse} from "axios";
 import {Series} from "@/interfaces/Series";
 
 export default {
@@ -84,7 +83,7 @@ export default {
   components: {},
   setup() {
     const route = useRoute();
-    const seriesDetails = ref<AxiosResponse<Series>>();
+    const seriesDetails = ref<Series>();
 
     onMounted(() => {
       getSeriesDetailsInfo();

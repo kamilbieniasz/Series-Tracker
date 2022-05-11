@@ -25,7 +25,7 @@
       <button class="favoriteBtn" @click="addToFavorite">
         <font-awesome-icon icon="star" type="far" class="starRegular" v-if="!favoriteStatus"></font-awesome-icon>
         <font-awesome-icon icon="star" type="fas" class="starSolid" v-if="favoriteStatus"></font-awesome-icon>
-      </buttoN>
+      </button>
     </div>
   </div>
 </template>
@@ -35,11 +35,13 @@ import {Series} from "@/interfaces/Series";
 import FontAwesomeIcon from "@/libs/FontAwesomeIcon.vue";
 import {ref} from "vue";
 import {useRouter} from "vue-router";
+import Button from "primevue/button";
 
 export default {
   name: "SeriesItem",
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    Button
   },
   props: {
     seriesItem: Object as () => Series

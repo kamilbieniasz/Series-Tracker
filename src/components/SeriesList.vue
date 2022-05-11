@@ -1,8 +1,12 @@
 <template>
-  <div id="seriesListWrapper">
-    <div v-for="seriesItem in series" :key="seriesItem.id">
-      <SeriesItem :seriesItem="seriesItem"></SeriesItem>
+  <div id="seriesListWrapper" v-if="series">
+    <div class="seriesListGrid">
+      <div v-for="seriesItem in paginatedSeries" :key="seriesItem.id">
+        <SeriesItem :seriesItem="seriesItem"></SeriesItem>
+      </div>
     </div>
+
+    <Paginator :rows="itemsPerPage" :totalRecords="series.length" @page="pagination($event)"></Paginator>
   </div>
 </template>
 
@@ -12,37 +16,60 @@ import {onMounted, ref} from 'vue';
 import {getSeriesWithPagination} from '@/api/series';
 import SeriesItem from "@/components/SeriesList/SeriesItem.vue";
 import {Series} from "@/interfaces/Series";
-import {AxiosResponse} from "axios";
+import Paginator from 'primevue/paginator';
+import {Pagination} from "@/interfaces/Pagination";
 
 export default {
   name: "series-list",
   components: {
-    SeriesItem
+    SeriesItem,
+    Paginator
   },
   setup() {
-    const currentPage = ref(1);
-    const series = ref<AxiosResponse<Series[] | []>>();
+    const currentPage = ref(0);
+    const itemsPerPage = ref(60);
+    const paginatedSeries = ref<Series[] | []>();
+    const series = ref<Series[] | []>();
 
     onMounted(() => {
       getSeries();
     });
 
     const getSeries = () => {
-      getSeriesWithPagination(currentPage.value).then(response => {
+      getSeriesWithPagination().then(response => {
         series.value = response;
+        paginatedSeries.value = response;
+
+        pagination()
       });
     }
 
-    return {series}
+    const pagination = (event: Pagination | null = null) => {
+      if(event) {
+        currentPage.value = event.page;
+      }
+      paginatedSeries.value = series.value;
+
+      const from =  itemsPerPage.value * currentPage.value;
+      const to =  (1 + currentPage.value) * itemsPerPage.value;
+
+      paginatedSeries.value = paginatedSeries.value?.slice(from, to)
+    }
+
+    return {series, itemsPerPage, paginatedSeries, pagination}
   }
 }
 </script>
 
 <style lang="scss" scoped>
 div#seriesListWrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 30px;
-  padding: 20px;
+
+  div.seriesListGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+    padding: 20px;
+  }
 }
+
 </style>
