@@ -149,6 +149,7 @@ export default {
         position: absolute;
         background-color: transparent;
         border:none;
+        cursor: pointer;
 
         & svg {
           width: 25px;
