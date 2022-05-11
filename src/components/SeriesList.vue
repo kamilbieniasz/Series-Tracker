@@ -3,7 +3,6 @@
     <div v-for="seriesItem in series" :key="seriesItem.id">
       <SeriesItem :seriesItem="seriesItem"></SeriesItem>
     </div>
-
   </div>
 </template>
 
