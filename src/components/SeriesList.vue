@@ -33,7 +33,6 @@ export default {
 
     onMounted(() => {
       getSeries();
-      // pagination()
     });
 
     const getSeries = () => {
