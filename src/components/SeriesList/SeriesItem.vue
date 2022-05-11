@@ -20,7 +20,7 @@
         <span>{{seriesItem.type}}</span>
       </div>
 
-      <Button class="moreInfoBtn p-button">More</Button>
+      <Button class="moreInfoBtn p-button" @click="gotoSeriesDetails(seriesItem.id)">More</Button>
 
       <button class="favoriteBtn" @click="addToFavorite">
         <font-awesome-icon icon="star" type="far" class="starRegular" v-if="!favoriteStatus"></font-awesome-icon>
@@ -33,14 +33,13 @@
 <script lang="ts">
 import {Series} from "@/interfaces/Series";
 import FontAwesomeIcon from "@/libs/FontAwesomeIcon.vue";
-import Button from "primevue/button";
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 export default {
   name: "SeriesItem",
   components: {
-    FontAwesomeIcon,
-    Button
+    FontAwesomeIcon
   },
   props: {
     seriesItem: Object as () => Series
@@ -48,13 +47,22 @@ export default {
   setup() {
     const favoriteStatus = ref(false);
 
+    const router = useRouter()
+
     const addToFavorite = () => {
       favoriteStatus.value = !favoriteStatus.value
     }
 
+    const gotoSeriesDetails = (id: number) => {
+      router.push({
+        path: `/details/${id}`
+      })
+    }
+
     return {
       favoriteStatus,
-      addToFavorite
+      addToFavorite,
+      gotoSeriesDetails
     }
   }
 }
