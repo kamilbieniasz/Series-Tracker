@@ -7,7 +7,7 @@
       </router-link>
       <span>{{seriesDetails.name}}</span>
     </h2>
-    <img :src="seriesDetails.image.original"/>
+    <img :src="seriesDetails.image.original" :alt="seriesDetails.name"/>
 
     <div class="description" v-if="seriesDetails.premiered">
 
