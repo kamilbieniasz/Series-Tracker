@@ -107,24 +107,41 @@ export default {
   div.seriesDetailsWrapper {
     max-height: 100vh;
     display: grid;
-    grid-template-areas: "title title"
+    grid-template-areas: "title"
+                         "image"
+                         "description";
+    grid-template-columns: 100%;
+    padding: 5px;
+
+    @include respond-to(min-width, 768px) {
+      grid-template-areas: "title title"
                          "image description";
-    grid-template-columns: 50% 50%;
+      grid-template-columns: 50% 50%;
+    }
 
     & > h2.title {
       grid-area: title;
       display: flex;
+      flex-direction: column;
       flex-wrap: nowrap;
-      align-items: center;
+
+      @include respond-to(min-width, 768px) {
+        flex-direction: row;
+        align-items: center;
+      }
 
       & > a {
         display: flex;
         align-items: center;
-        margin: 0 10px;
+        margin: 10px;
         text-decoration: none;
         color: $color-black;
         font-size: $font-size-normal;
         transition: transform 300ms ease-in-out;
+
+        @include respond-to(min-width, 768px) {
+          margin: 0 10px;
+        }
 
         &:hover {
           transform: scale(1.1);
@@ -165,6 +182,18 @@ export default {
       & > div {
         margin: 5px 0;
         font-size: $font-size-normal;
+
+         ::v-deep p {
+          text-align: justify;
+
+          @include respond-to(min-width, 768px) {
+            text-align: left;
+          }
+        }
+
+        & > a {
+          overflow-wrap: break-word;
+        }
       }
     }
   }
