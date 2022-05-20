@@ -66,9 +66,21 @@ div#seriesListWrapper {
 
   div.seriesListGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 30px;
     padding: 20px;
+
+    @include respond-to(min-width, 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(min-width, 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include respond-to(min-width, 1366px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 }
 
