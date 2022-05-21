@@ -85,7 +85,7 @@ export default {
       -moz-box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
       box-shadow: 0 0 24px 0 rgba(66, 68, 90, 1);
 
-      transform: scale(1.1);
+      transform: scale(1.05);
       transition: 300ms ease-in-out;
 
       & > h2.title {
