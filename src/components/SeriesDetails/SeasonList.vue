@@ -103,7 +103,7 @@ export default {
       setTimeout(() => {
         event.target.children[0].classList.remove('active');
         event.target.children[0].classList.remove('alignRight');
-      }, 500);
+      }, 100);
     }
 
     return {
