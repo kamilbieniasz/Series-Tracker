@@ -68,6 +68,7 @@
       </div>
 
     </div>
+    <SeasonList class="seasonList" :seriesId="seriesDetails.id"></SeasonList>
   </div>
 </template>
 
@@ -77,10 +78,13 @@ import {getSeriesDetails} from '@/api/series';
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
 import {Series} from "@/interfaces/Series";
+import SeasonList from "@/components/SeriesDetails/SeasonList.vue";
 
 export default {
   name: "SeriesDetails",
-  components: {},
+  components: {
+    SeasonList
+  },
   setup() {
     const route = useRoute();
     const seriesDetails = ref<Series>();
@@ -109,13 +113,15 @@ export default {
     display: grid;
     grid-template-areas: "title"
                          "image"
-                         "description";
+                         "description"
+                         "seasonList";
     grid-template-columns: 100%;
     padding: 5px;
 
     @include respond-to(min-width, 768px) {
       grid-template-areas: "title title"
-                         "image description";
+                           "image description"
+                           "seasonList seasonList";
       grid-template-columns: 50% 50%;
     }
 
@@ -195,6 +201,10 @@ export default {
           overflow-wrap: break-word;
         }
       }
+    }
+
+    & > .seasonList {
+      grid-area: seasonList;
     }
   }
 </style>
