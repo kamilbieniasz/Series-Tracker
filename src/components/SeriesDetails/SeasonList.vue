@@ -7,10 +7,12 @@
       </button>
 
       <div class="seasonsItems">
-        <div class="seasonsItem" v-for="season in seasons" :key="season.id" @mouseover="activeDescription($event)" @mouseleave="dissactiveDescription($event)">
-          <div class="description" v-html="season.summary" v-if="season.summary"></div>
-          <img :src="season.image.medium" :alt="season.id + season.name"/>
-        </div>
+        <router-link v-for="season in seasons" :key="season.id" :to="'/details/'+seriesId+'/season/'+season.id">
+          <div class="seasonsItem"  @mouseover="activeDescription($event)" @mouseleave="dissactiveDescription($event)">
+            <div class="description" v-html="season.summary" v-if="season.summary"></div>
+            <img :src="season.image.medium" :alt="season.id + season.name"/>
+          </div>
+        </router-link>
       </div>
 
       <button @click="sliderMove('right')">
@@ -52,12 +54,12 @@ export default {
           console.log('response', response);
 
           seasons.value?.map(season => {
-            if(season.summary.split('</p>').length > 1) {
-              season.summary = season.summary.split('</p>')[0] + '</p>';
+            if(season?.summary) {
+              if( season?.summary.split('</p>').length > 1) {
+                season.summary = season.summary.split('</p>')[0] + '</p>';
+              }
             }
-          })
-
-
+          });
         }).catch(error => {
           console.log('error: ', error);
         });
@@ -161,7 +163,7 @@ export default {
           flex-direction: row;
         }
 
-        & > div.seasonsItem {
+        & div.seasonsItem {
           padding: 5px;
           position: relative;
           display: flex;
@@ -205,6 +207,8 @@ export default {
             ::v-deep p {
               margin: 0;
               height: 100%;
+              text-decoration: none;
+              color: $color-black;
 
               @include respond-to(min-width, 768px) {
                 min-width: 350px;
