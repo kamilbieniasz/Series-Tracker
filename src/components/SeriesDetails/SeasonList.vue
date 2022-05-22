@@ -8,7 +8,7 @@
 
       <div class="seasonsItems">
         <div class="seasonsItem" v-for="season in seasons" :key="season.id" @mouseover="activeDescription($event)" @mouseleave="dissactiveDescription($event)">
-          <div class="description" v-html="season.summary"></div>
+          <div class="description" v-html="season.summary" v-if="season.summary"></div>
           <img :src="season.image.medium" :alt="season.id + season.name"/>
         </div>
       </div>
