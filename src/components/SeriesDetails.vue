@@ -1,7 +1,7 @@
 <template>
   <div class="seriesDetailsWrapper" v-if="seriesDetails">
     <h2 class="title">
-      <router-link to="/">
+      <router-link class="p-button" to="/">
         <font-awesome-icon icon="angles-left"></font-awesome-icon>
         <span>Back to list</span>
       </router-link>
@@ -11,29 +11,29 @@
 
     <div class="description" v-if="seriesDetails.premiered">
 
-      <div v-html="seriesDetails.summary">
+      <div v-if="seriesDetails?.summary" v-html="seriesDetails.summary">
       </div>
 
-      <div v-if="seriesDetails.rating.average">
+      <div v-if="seriesDetails?.rating?.average">
         <strong>Rating: </strong>
         <span>{{seriesDetails.rating.average}}</span>
       </div>
 
-      <div v-if="seriesDetails.type">
+      <div v-if="seriesDetails?.type">
         <strong>Type: </strong>
         <span>{{seriesDetails.type}}</span>
       </div>
 
-      <div v-if="seriesDetails.genres.length > 0">
+      <div v-if="seriesDetails?.genres?.length > 0">
         <strong>Genres: </strong>
-        <ul>
-          <li v-for="(genre, index) in seriesDetails.genres" :key="index">
+        <ul v-if="seriesDetails?.genres.length > 0">
+          <li v-for="(genre, index) in seriesDetails.genres" :key="index" >
             {{genre}}
           </li>
         </ul>
       </div>
 
-      <div v-if="seriesDetails.premiered">
+      <div v-if="seriesDetails?.premiered">
         <strong>Premiered date: </strong>
         <span>{{seriesDetails.premiered}}</span>
       </div>
@@ -141,8 +141,7 @@ export default {
         align-items: center;
         margin: 10px;
         text-decoration: none;
-        color: $color-black;
-        font-size: $font-size-normal;
+        color: $color-white;
         transition: transform 300ms ease-in-out;
 
         @include respond-to(min-width, 768px) {
