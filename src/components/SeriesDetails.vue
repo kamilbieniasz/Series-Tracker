@@ -139,6 +139,7 @@ export default {
       & > a {
         display: flex;
         align-items: center;
+        align-self: flex-start;
         margin: 10px;
         text-decoration: none;
         color: $color-white;
