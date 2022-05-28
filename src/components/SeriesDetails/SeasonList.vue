@@ -10,7 +10,10 @@
         <router-link v-for="season in seasons" :key="season.id" :to="'/details/'+seriesId+'/season/'+season.id">
           <div class="seasonsItem"  @mouseover="activeDescription($event)" @mouseleave="dissactiveDescription($event)">
             <div class="description" v-html="season.summary" v-if="season.summary"></div>
-            <img :src="season.image.medium" :alt="season.id + season.name"/>
+            <img v-if="season?.image?.medium" :src="season.image.medium" :alt="season.id + season.name"/>
+            <div v-if="!season?.image?.medium" class="noImages">
+              <font-awesome-icon icon="image"></font-awesome-icon>
+            </div>
           </div>
         </router-link>
       </div>
@@ -163,69 +166,85 @@ export default {
           flex-direction: row;
         }
 
-        & div.seasonsItem {
-          padding: 5px;
-          position: relative;
-          display: flex;
-          flex-direction: column-reverse;
+        & > a {
+          text-decoration: none;
 
-          @include respond-to(min-width, 768px) {
-            border-bottom: 2px solid rgba($color-black, 0.8);
-
-            &:last-child {
-              border-bottom: none;
-            }
-          }
-
-          & > img {
-            pointer-events: none;
-            max-height: 400px;
-            object-fit: contain;
-
-            @include respond-to(min-width, 768px) {
-              max-height: none;
-            }
-          }
-
-          & > div.description {
-            background-color: $color-white;
-            top:0;
-            left: 215px;
-            z-index: 2;
+          & div.seasonsItem {
             height: 100%;
-            pointer-events: none;
-            transition: 300ms ease-in-out;
-            text-align: left;
-            padding: 10px;
+            padding: 5px;
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse;
 
             @include respond-to(min-width, 768px) {
-              display: none;
-              position: absolute;
-              opacity: 0;
-            }
+              border-bottom: 2px solid rgba($color-black, 0.8);
 
-            ::v-deep p {
-              margin: 0;
-              height: 100%;
-              text-decoration: none;
-              color: $color-black;
-
-              @include respond-to(min-width, 768px) {
-                min-width: 350px;
-                max-width: 600px;
+              &:last-child {
+                border-bottom: none;
               }
             }
 
-            &.alignRight {
-              left: auto;
-              right: 215px;
+            & > img {
+              pointer-events: none;
+              max-height: 400px;
+              object-fit: contain;
+
+              @include respond-to(min-width, 768px) {
+                max-height: none;
+              }
             }
-            &.active {
-              display: block;
-            }
-            &.show {
-              opacity: 1;
+
+            & > div.description {
+              background-color: $color-white;
+              top:0;
+              left: 215px;
+              z-index: 2;
+              height: 100%;
+              pointer-events: none;
               transition: 300ms ease-in-out;
+              text-align: left;
+              padding: 10px;
+
+              @include respond-to(min-width, 768px) {
+                display: none;
+                position: absolute;
+                opacity: 0;
+              }
+
+              ::v-deep p {
+                margin: 0;
+                height: 100%;
+                text-decoration: none;
+                color: $color-black;
+
+                @include respond-to(min-width, 768px) {
+                  min-width: 350px;
+                  max-width: 600px;
+                }
+              }
+
+              &.alignRight {
+                left: auto;
+                right: 215px;
+              }
+              &.active {
+                display: block;
+              }
+              &.show {
+                opacity: 1;
+                transition: 300ms ease-in-out;
+              }
+            }
+
+            div.noImages {
+              height: 100%;
+              display: flex;
+              align-items: center;
+
+              & > svg {
+                width: 200px;
+                color: black;
+              }
             }
           }
         }
